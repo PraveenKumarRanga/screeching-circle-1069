@@ -1,11 +1,16 @@
 package com.masai.dao;
 
 import java.util.List;
+import java.util.Scanner;
 
+import com.masai.entity.Issues;
 import com.masai.entity.LoggedIn;
 import com.masai.entity.SupportRepresentative;
 import com.masai.exception.DuplicateDataException;
 import com.masai.exception.NoRecordFound;
+import com.masai.exception.SomethingWentWrong;
+import com.masai.service.SupportService;
+import com.masai.service.SupportServiceImpl;
 import com.masai.utility.EMUtils;
 
 import jakarta.persistence.EntityManager;
@@ -75,5 +80,145 @@ public class SupportDAOImpl implements SupportDAO{
 		
 		
 	}
+
+	@Override
+	public List<Issues> viewIssue() throws SomethingWentWrong {
+		
+		EntityManager em = null;
+		List<Issues> list = null;
+		
+		try {
+			em = EMUtils.createConection();
+			
+			Query query = em.createQuery("SELECT c FROM Issues c");
+			
+			list = query.getResultList();
+			
+			if(list.size()==0) {
+				System.out.println("Issue list is empty");
+			}
+			return list;
+			
+		}catch(PersistenceException pe) {
+			System.out.println(pe.getMessage());
+		}
+		finally {
+			if(em != null) {
+				em.close();
+			}
+		}
+		
+		return list;
+	}
+
+	@Override
+	public void assignToSelf() throws SomethingWentWrong {
+		
+		EntityManager em = null;
+		EntityTransaction et = null;
+		Scanner sc = new Scanner(System.in);
+		try {
+			em = EMUtils.createConection();
+			
+			SupportRepresentative csr = em.find(SupportRepresentative.class,LoggedIn.userid);
+			SupportService service = new SupportServiceImpl();
+			
+			service.viewIssue();
+			
+			System.out.println("Enter Issue_id to be assigned");
+			int id = sc.nextInt();
+			
+			Issues issue = em.find(Issues.class, id);
+			
+			if(issue != null) {
+				System.out.println();
+				et = em.getTransaction();
+				
+				et.begin();
+				issue.setCsr(csr);
+				et.commit();
+			}
+			
+		}catch(PersistenceException pe) {
+			throw new SomethingWentWrong(pe.getMessage());
+		}
+		finally {
+			if(em != null) {
+				em.close();
+			}
+		}
+	}
+
+	@Override
+	public void assignToOther(int id) throws SomethingWentWrong {
+		
+		EntityManager em = null;
+		EntityTransaction et = null;
+		Scanner sc = new Scanner(System.in);
+		
+		try {
+			em = EMUtils.createConection();
+			
+			SupportRepresentative csr = em.find(SupportRepresentative.class,LoggedIn.userid);
+			SupportService service = new SupportServiceImpl();
+			
+			service.viewIssue();
+//			System.out.println("Enter Issue_id to be assigned");
+//			int id = sc.nextInt();
+			
+			Issues issue = em.find(Issues.class, id);
+			
+			if(issue != null) {
+				System.out.println();
+				et = em.getTransaction();
+				
+				et.begin();
+				issue.setCsr(csr);
+				et.commit();
+			}
+			
+			
+			
+		}catch(PersistenceException e) {
+			throw new SomethingWentWrong(e.getMessage());
+		}finally {
+			em.close();
+		}
+		
+	}
+
+	
+	@Override
+	public void replyToIssue(int id, String reply) throws SomethingWentWrong {
+		
+		EntityManager em = null;
+		EntityTransaction et = null;
+		
+		
+		try {
+			em = EMUtils.createConection();
+			
+			Issues issue = em.find(Issues.class, id);
+			if(issue!= null) {
+				System.out.println();
+				et = em.getTransaction();
+				
+				et.begin();
+				issue.setReply(reply);
+				et.commit();
+			}
+			
+		}catch(PersistenceException e) {
+			throw new SomethingWentWrong(e.getMessage());
+		}finally {
+			em.close();
+		}
+		
+	}
+
+	
+	
+
+
 
 }
