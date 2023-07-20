@@ -3,7 +3,10 @@ package com.masai.dao;
 import java.util.List;
 
 import com.masai.entity.Customer;
+import com.masai.entity.Feedback;
+import com.masai.entity.Issues;
 import com.masai.entity.LoggedIn;
+import com.masai.entity.Status;
 import com.masai.exception.DuplicateDataException;
 import com.masai.exception.NoRecordFound;
 import com.masai.exception.SomethingWentWrong;
@@ -76,5 +79,67 @@ public class CustomerDAOImpl implements CustomerDAO{
 		}
 		
 	}
+
+
+	@Override
+	public void raiseIssue(String issue) throws SomethingWentWrong {
+		
+		EntityManager em = null;
+		
+		try {
+			em = EMUtils.createConection();
+			
+			Customer cust = em.find(Customer.class, LoggedIn.userid);
+			
+			Issues newIssue = new Issues(issue, Status.OPEN,cust,null,null);
+			
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		em.persist(newIssue);
+		et.commit();
+			
+			
+		}catch(PersistenceException pe) {
+			throw new SomethingWentWrong("Error, please try again");
+		}
+		finally {
+			if(em!=null) {
+				em.close();
+			}
+		}
+		
+	}
+
+	
+	@Override
+	public void giveFeedback(int id, String feedback, int rating) throws SomethingWentWrong {
+		
+		EntityManager em = null;
+		EntityTransaction et = null;
+		try {
+			em = EMUtils.createConection();
+			
+			Issues issue = em.find(Issues.class, id);
+			Feedback fb = new Feedback(feedback,rating,issue);
+			
+			et = em.getTransaction();
+			
+			et.begin();
+			em.persist(fb);
+			et.commit();
+			
+			
+		}catch(PersistenceException pe) {
+			throw new SomethingWentWrong(pe.getMessage());
+		}finally {
+			if(em!=null) {
+				em.close();
+			}
+		}
+		
+	}
+
+
+	
 
 }

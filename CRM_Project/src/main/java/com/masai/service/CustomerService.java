@@ -11,4 +11,8 @@ public interface CustomerService {
 
 	void logIn(String username, String password) throws NoRecordFound;
 
+	void raiseIssue(String issue) throws SomethingWentWrong;
+
+	void giveFeedback() throws SomethingWentWrong;
+
 }

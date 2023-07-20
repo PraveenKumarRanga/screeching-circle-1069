@@ -8,6 +8,8 @@ import com.masai.exception.NoRecordFound;
 import com.masai.exception.SomethingWentWrong;
 import com.masai.service.CustomerService;
 import com.masai.service.CustomerServiceImpl;
+import com.masai.service.SupportService;
+import com.masai.service.SupportServiceImpl;
 
 public class CustomerUI {
 
@@ -68,30 +70,30 @@ public class CustomerUI {
 			System.out.println("Press 2 to view issue status");
 			System.out.println("Press 3 to provide feedback");
 			System.out.println("Press 4 to change password");
-			System.out.println("Press 5 to log_out");
-			System.out.println("Press 6 to delete account");
+			System.out.println("Press 5 to delete account");
+			System.out.println("Press 6 to log_out");
 			
 			System.out.println("enter choice");
 			choice = sc.nextInt();
 			
 			switch(choice) {
 			case 1:
-//				raiseIssue(sc);
+				raiseIssue(sc);
 				break;
 			case 2:
-//				viewStatus();
+				viewStatus();
 				break;
 			case 3:
-//				giveFeedback();
+				giveFeedback();
 				break;
 			case 4:
-//				changePassword(sc);
+				changePassword(sc);
 				break;
 			case 5:
-				System.out.println("Thankyou, visit again");
+//				deleteAcc(sc);
 				break;
 			case 6:
-//				deleteAcc(sc);
+//				System.out.println("Thankyou, visit again");
 				break;
 			default:
 				System.out.println("Invalid input");
@@ -100,4 +102,59 @@ public class CustomerUI {
 		}while(choice!=0);
 	}
 
+
+	private static void giveFeedback() {
+		
+		CustomerService service = new CustomerServiceImpl();
+		
+		try {
+			service.giveFeedback();
+			System.out.println("====================");
+			System.out.println("Fedback is recorded");
+			System.out.println("====================");
+		} catch (SomethingWentWrong e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+		}
+		
+	}
+
+	private static void viewStatus() {
+		
+		SupportService service = new SupportServiceImpl();
+		try {
+			service.viewStatus();
+			System.out.println("Issue status");
+		} catch (SomethingWentWrong e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	private static void raiseIssue(Scanner sc) {
+		
+		System.out.println("Enter issue");
+		sc.nextLine();
+		String issue = sc.nextLine();
+		
+		CustomerService service = new CustomerServiceImpl();
+		
+		try {
+			service.raiseIssue(issue);
+			System.out.println("Issue is raised");
+		} catch (SomethingWentWrong e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+		}
+		
+	}
+
+
+	private static void changePassword(Scanner sc) {
+		
+		
+		
+	}
+	
 }

@@ -11,4 +11,8 @@ public interface CustomerDAO {
 
 	void logIn(String username, String password) throws NoRecordFound;
 
+	void raiseIssue(String issue) throws SomethingWentWrong;
+
+	void giveFeedback(int id, String feedback, int rating) throws SomethingWentWrong;
+
 }
