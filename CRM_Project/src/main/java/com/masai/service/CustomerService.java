@@ -15,4 +15,6 @@ public interface CustomerService {
 
 	void giveFeedback() throws SomethingWentWrong;
 
+	void deleteAccount() throws SomethingWentWrong;
+
 }

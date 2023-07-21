@@ -24,7 +24,7 @@ public class CustomerUI {
 		System.out.println("Enter password");
 		String password = sc.next();
 		
-		Customer customer = new Customer(email, username, password, 1);
+		Customer customer = new Customer(email, username, password);
 		CustomerService service = new CustomerServiceImpl();
 		
 		try {
@@ -66,14 +66,15 @@ public class CustomerUI {
 		
 		int choice;
 		do {
-			System.out.println("Press 1 to Raise Issue");
-			System.out.println("Press 2 to view issue status");
-			System.out.println("Press 3 to provide feedback");
-			System.out.println("Press 4 to change password");
-			System.out.println("Press 5 to delete account");
-			System.out.println("Press 6 to log_out");
+			System.out.println("====================================");
+			System.out.println("| Press 1 to Raise Issue           |");
+			System.out.println("| Press 2 to view issue status     |");
+			System.out.println("| Press 3 to provide feedback      |");
+			System.out.println("| Press 4 to delete account        |");
+			System.out.println("| Press 0 to log_out               |");
+			System.out.println("====================================");
 			
-			System.out.println("enter choice");
+			System.out.println("Enter yuour choice as customer : ");
 			choice = sc.nextInt();
 			
 			switch(choice) {
@@ -87,21 +88,20 @@ public class CustomerUI {
 				giveFeedback();
 				break;
 			case 4:
-				changePassword(sc);
+				deleteAccount(sc);
 				break;
-			case 5:
-//				deleteAcc(sc);
-				break;
-			case 6:
-//				System.out.println("Thankyou, visit again");
-				break;
-			default:
-				System.out.println("Invalid input");
-				
+			case 0:
+				System.out.println("======================================");
+        		System.out.println("        Thankyou visit again");
+        		System.out.println("======================================"); 
+        		break;
+        	default:
+        		System.out.println("**************************************");
+        		System.out.println("     Please enter valid choice");
+        		System.out.println("**************************************");
 			}
 		}while(choice!=0);
 	}
-
 
 	private static void giveFeedback() {
 		
@@ -124,7 +124,7 @@ public class CustomerUI {
 		SupportService service = new SupportServiceImpl();
 		try {
 			service.viewStatus();
-			System.out.println("Issue status");
+			System.out.println("============Issue status================");
 		} catch (SomethingWentWrong e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -142,7 +142,7 @@ public class CustomerUI {
 		
 		try {
 			service.raiseIssue(issue);
-			System.out.println("Issue is raised");
+			System.out.println("===========Issue is raised===============");
 		} catch (SomethingWentWrong e) {
 			// TODO Auto-generated catch block
 			e.getMessage();
@@ -150,11 +150,26 @@ public class CustomerUI {
 		
 	}
 
-
-	private static void changePassword(Scanner sc) {
+	private static void deleteAccount(Scanner sc) {
 		
+		System.out.println("Are sure, do you want to delete account");
+		String choice = sc.next().toLowerCase();
+		if(choice == "yes") {
+			try {
+				CustomerService service = new CustomerServiceImpl();
+				service.deleteAccount();
+				System.out.println("Account is deleted");
+			}catch(SomethingWentWrong e) {
+				e.getMessage();
+			}
+		}else if(choice == "no") {
+			System.out.println("Account is not deleted");
+		}else {
+			System.out.println("please enter valid choice");
+		}
 		
 		
 	}
+	
 	
 }

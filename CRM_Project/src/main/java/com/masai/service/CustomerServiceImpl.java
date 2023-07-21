@@ -70,4 +70,12 @@ public class CustomerServiceImpl implements CustomerService{
 		
 	}
 
+	@Override
+	public void deleteAccount() throws SomethingWentWrong {
+		
+		CustomerDAO dao = new CustomerDAOImpl();
+		dao.deleteAccount();
+		
+	}
+
 }

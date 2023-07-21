@@ -23,6 +23,12 @@ public interface SupportService {
 
 	void replyToIssue(int id, Scanner sc) throws SomethingWentWrong;
 
+	void closeIssue(int id) throws SomethingWentWrong;
+
+	void viewFeedback() throws SomethingWentWrong, NoRecordFound;
+
+	void deleteAccount() throws SomethingWentWrong, NoRecordFound;
+
 
 
 }

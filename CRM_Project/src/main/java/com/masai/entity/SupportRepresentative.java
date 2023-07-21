@@ -21,21 +21,18 @@ public class SupportRepresentative {
 	
 	@Column(length = 20, nullable = false)
 	private String password;
-	
-	@Column(name = "isClosed",nullable = false)
-	private int isClosed;
 
 	public SupportRepresentative() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public SupportRepresentative(String email, String username, String password, int isClosed) {
+	public SupportRepresentative(String email, String username, String password) {
 		super();
 		this.email = email;
 		this.username = username;
 		this.password = password;
-		this.isClosed = isClosed;
+
 	}
 
 	/**
@@ -94,27 +91,15 @@ public class SupportRepresentative {
 		this.password = password;
 	}
 
-	
-	
-	/**
-	 * @return the isClosed
-	 */
-	public int getIsClosed() {
-		return isClosed;
-	}
-
-	/**
-	 * @param isClosed the isClosed to set
-	 */
-	public void setIsClosed(int isClosed) {
-		this.isClosed = isClosed;
-	}
-
 	@Override
 	public String toString() {
 		return "SupportRepresentative [id=" + id + ", email=" + email + ", username=" + username + ", password="
-				+ password + ", isClosed=" + isClosed + "]";
+				+ password + "]";
 	}
+
+	
+	
+
 
 	
 	

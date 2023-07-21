@@ -15,4 +15,6 @@ public interface CustomerDAO {
 
 	void giveFeedback(int id, String feedback, int rating) throws SomethingWentWrong;
 
+	void deleteAccount() throws SomethingWentWrong;
+
 }

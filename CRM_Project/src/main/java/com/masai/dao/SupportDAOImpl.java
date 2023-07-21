@@ -3,8 +3,11 @@ package com.masai.dao;
 import java.util.List;
 import java.util.Scanner;
 
+import com.masai.App;
+import com.masai.entity.Feedback;
 import com.masai.entity.Issues;
 import com.masai.entity.LoggedIn;
+import com.masai.entity.Status;
 import com.masai.entity.SupportRepresentative;
 import com.masai.exception.DuplicateDataException;
 import com.masai.exception.NoRecordFound;
@@ -32,7 +35,7 @@ public class SupportDAOImpl implements SupportDAO{
 			query.setParameter("username", csr.getUsername());
 			
 			if((long) query.getSingleResult()>0) {
-				throw new DuplicateDataException("Account already exits");
+				throw new DuplicateDataException("***************** Account already exits **************");
 			}
 			
 			EntityTransaction et = em.getTransaction();
@@ -57,14 +60,14 @@ public class SupportDAOImpl implements SupportDAO{
 			
 			em = EMUtils.createConection();
 			
-			Query query = em.createQuery("SELECT c.id FROM SupportRepresentative c WHERE username = :un AND password = :pw AND isClosed = 1");
+			Query query = em.createQuery("SELECT c.id FROM SupportRepresentative c WHERE username = :un AND password = :pw");
 			query.setParameter("un", username);
 			query.setParameter("pw", password);
 			
 			List<Integer> list = query.getResultList();
 			
 			if(list.size()==0) {
-				throw new NoRecordFound("Account does not exists");
+				throw new NoRecordFound("***************** Account does not exists *******************");
 			}
 			
 			LoggedIn.userid = list.get(0);
@@ -95,7 +98,7 @@ public class SupportDAOImpl implements SupportDAO{
 			list = query.getResultList();
 			
 			if(list.size()==0) {
-				System.out.println("Issue list is empty");
+				System.out.println("**************** Issue list is empty *************");
 			}
 			return list;
 			
@@ -163,9 +166,6 @@ public class SupportDAOImpl implements SupportDAO{
 			SupportService service = new SupportServiceImpl();
 			
 			service.viewIssue();
-//			System.out.println("Enter Issue_id to be assigned");
-//			int id = sc.nextInt();
-			
 			Issues issue = em.find(Issues.class, id);
 			
 			if(issue != null) {
@@ -213,6 +213,97 @@ public class SupportDAOImpl implements SupportDAO{
 		}finally {
 			em.close();
 		}
+		
+	}
+
+
+	@Override
+	public void closeIssue(int id) throws SomethingWentWrong {
+	
+		EntityManager em = null;
+		EntityTransaction et = null;
+		try {
+			
+			em = EMUtils.createConection();
+			
+			Issues issue = em.find(Issues.class, id);
+			
+			if(issue != null) {
+				System.out.println();
+				et = em.getTransaction();
+				
+				et.begin();
+				issue.setStatus(Status.CLOSED);
+				et.commit();
+			}
+			
+			
+		}catch(PersistenceException pe) {
+			throw new SomethingWentWrong(pe.getMessage());
+		}finally {
+			if(em!=null) {
+				em.close();
+			}
+		}
+		
+	}
+
+
+	@Override
+	public List<Feedback> viewFeedback() throws SomethingWentWrong, NoRecordFound{
+		
+		EntityManager em = null;
+		EntityTransaction et = null;
+		
+		List<Feedback> list = null;
+		
+		try {
+			
+			em = EMUtils.createConection();
+			Query query = em.createQuery("SELECT c From Feedback c");
+			
+			list = query.getResultList();
+			
+			if(list.size()==0) {
+				throw new NoRecordFound("*************** Feedback not available ********************");
+			}
+			
+		}catch(PersistenceException pe) {
+			throw new SomethingWentWrong(pe.getMessage());
+		}finally {
+			em.close();
+		}
+		
+		
+		return null;
+	}
+
+	@Override
+	public void deleteAccount() throws SomethingWentWrong, NoRecordFound {
+		
+		EntityManager em = null;
+		EntityTransaction et = null;
+		
+		try {
+			
+			em = EMUtils.createConection();
+			SupportRepresentative sp = em.find(SupportRepresentative.class, LoggedIn.userid); 
+			
+			et = em.getTransaction();
+			et.begin();
+//			sp.setIsClosed(0);
+			em.remove(sp);
+			
+			et.commit();
+			
+			
+		}catch(PersistenceException e) {
+			throw new SomethingWentWrong(e.getMessage());
+		}
+		finally {
+			em.close();
+		}
+		
 		
 	}
 

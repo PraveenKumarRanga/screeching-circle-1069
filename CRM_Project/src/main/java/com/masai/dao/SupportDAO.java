@@ -2,6 +2,7 @@ package com.masai.dao;
 
 import java.util.List;
 
+import com.masai.entity.Feedback;
 import com.masai.entity.Issues;
 import com.masai.entity.SupportRepresentative;
 import com.masai.exception.DuplicateDataException;
@@ -21,6 +22,12 @@ public interface SupportDAO {
 	void assignToOther(int id)throws SomethingWentWrong;
 
 	void replyToIssue(int id, String reply) throws SomethingWentWrong;
+
+	void closeIssue(int id) throws SomethingWentWrong;
+
+	List<Feedback> viewFeedback() throws SomethingWentWrong,NoRecordFound;
+
+	void deleteAccount() throws SomethingWentWrong, NoRecordFound;
 
 	
 	
