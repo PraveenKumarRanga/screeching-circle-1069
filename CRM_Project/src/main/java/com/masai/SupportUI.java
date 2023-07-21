@@ -22,13 +22,14 @@ public class SupportUI {
 		System.out.println("Enter password");
 		String password = sc.next();
 		
-		SupportRepresentative csr = new SupportRepresentative(email, username, password,1);
+		SupportRepresentative csr = new SupportRepresentative(email, username, password);
 		
 		SupportService service = new SupportServiceImpl();
 		
 		try {
 			service.addCSR(csr);
-			System.out.println("Representative account registered successfully");
+			System.out.println("===================================================");
+			System.out.println("  Representative account registered successfully");
 		}
 		catch(DuplicateDataException e) {
 			System.out.println(e.getMessage());
@@ -62,16 +63,17 @@ public class SupportUI {
 		int choice;
 		
 		do {
-			System.out.println("press 1 to view issue");
-			System.out.println("press 2 to assign issue");
-			System.out.println("press 3 to Reply to issue");
-			System.out.println("press 4 to Close the issue");
-			System.out.println("press 5 to view feedback");
-			System.out.println("press 6 to change password");
-			System.out.println("press 7 to delete account");;
-			System.out.println("press 8 to log_out");
+			System.out.println("======================================");
+			System.out.println("| Press 1 to view issue              |");
+			System.out.println("| Press 2 to assign issue            |");
+			System.out.println("| Press 3 to Reply to issue          |");
+			System.out.println("| Press 4 to Close the issue         |");
+			System.out.println("| Press 5 to view feedback           |");
+			System.out.println("| Perss 6 to delete account");
+			System.out.println("| Press 0 to logout                  |");
+			System.out.println("======================================");
 			
-			System.out.println("enter your choice");
+			System.out.println("Enter your choice as CSR : ");
 			choice = sc.nextInt();
 			
 			
@@ -86,22 +88,23 @@ public class SupportUI {
 				replyToIssues(sc);
 				break;
 			case 4:
-//				closeIssue(sc);
+				closeIssue(sc);
 				break;
 			case 5:
-//                viewFeedback();
+                viewFeedback();
 				break;
 			case 6:
-//				changePassword(sc);
+				deleteAccount(sc);
 				break;
-			case 7:
-//				deleteAccount(sc);
-				break;
-			case 8:
-				System.out.println("Thankyou, visit again");
+			case 0:
+				System.out.println("====================================");
+				System.out.println("       Thankyou, visit again");
+				System.out.println("====================================");
 				break;
 			default:
-				System.out.println("Invalid input");
+				System.out.println("*************************************");
+				System.out.println("         Invalid input");
+				System.out.println("*************************************");
 				
 			}
 			
@@ -126,13 +129,13 @@ public class SupportUI {
 		
 		int choice;
 		do {
-			System.out.println("==============================");
-			System.out.println("Press 1 to Assign to self");
-			System.out.println("Press 2 to Assign to other");
-			System.out.println("Press 0 to exit");
-			System.out.println("==============================");
-			System.out.println("Enter your choice");
-			System.out.println("==============================");
+			System.out.println("=================================");
+			System.out.println("| Press 1 to Assign to self     |");
+			System.out.println("| Press 2 to Assign to other    |");
+			System.out.println("| Press 0 to exit               |");
+			System.out.println("=================================");
+			System.out.println("Enter your choice to assign : ");
+			
 			
 			choice = sc.nextInt();
 			
@@ -144,11 +147,14 @@ public class SupportUI {
 				assignToOther(sc);
 				break;
 			case 0:
-				System.out.println("Thankyou");
+				System.out.println("==========================");
+				System.out.println("         Thankyou");
+				System.out.println("==========================");
 				break;
 			default:
-				System.out.println("Invalid input");
-				
+				System.out.println("***************************");
+				System.out.println("       Invalid input");
+				System.out.println("***************************");
 				
 			}
 			
@@ -161,9 +167,9 @@ public class SupportUI {
 		SupportService service = new SupportServiceImpl();
 		try {
 			service.assignToSelf();
-			System.out.println("++++++++++++++++++++++++++++++++++++++");
-			System.out.println("Issue assigned to self successfully");
-			System.out.println("++++++++++++++++++++++++++++++++++++++");
+			System.out.println("==================================================");
+			System.out.println("    Issue assigned to self successfully");
+			System.out.println("==================================================");
 		}catch(SomethingWentWrong e) {
 			e.getMessage();
 		}
@@ -171,13 +177,15 @@ public class SupportUI {
 	}
 	
 	private static void assignToOther(Scanner sc) {
-		System.out.println("Enter id to assign");
+		System.out.println("Enter id to assign : ");
 		int id = sc.nextInt();
 		
 		SupportService service = new SupportServiceImpl();
 		try {
 			service.assignToOther(id);
-			System.out.println("Issue assigned to entered id successfully");
+			System.out.println("==================================================");
+			System.out.println("     Issue assigned to entered id successfully");
+			System.out.println("==================================================");
 		}catch(SomethingWentWrong e) {
 			e.getMessage();
 		}
@@ -191,11 +199,54 @@ public class SupportUI {
 		
 		try {
 			service.replyToIssue(id,sc);
-			System.out.println("Reply to the issue is submitted");
+			System.out.println("==================================================");
+			System.out.println("        Reply to the issue is submitted");
+			System.out.println("==================================================");
 		} catch (SomethingWentWrong e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+	}
+	
+	private static void closeIssue(Scanner sc) {
+		
+		System.out.println("Enter issue id to reply");
+		int id = sc.nextInt();
+		SupportService service = new SupportServiceImpl();
+		try {
+			service.closeIssue(id);
+		} catch (SomethingWentWrong e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private static void viewFeedback() {
+		
+		SupportService service = new SupportServiceImpl();
+		try {
+			service.viewFeedback();
+			System.out.println("===============Feedback==============");
+		} catch (SomethingWentWrong | NoRecordFound e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	private static void deleteAccount(Scanner sc) {
+	
+
+			try {
+				SupportService service = new SupportServiceImpl();
+				service.deleteAccount();
+				System.out.println("Account deleted successfully");
+			} catch (SomethingWentWrong | NoRecordFound e) {
+				// TODO Auto-generated catch block
+				System.out.println(e.getMessage());
+			}	
 		
 	}
 

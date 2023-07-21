@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import com.masai.dao.SupportDAO;
 import com.masai.dao.SupportDAOImpl;
+import com.masai.entity.Feedback;
 import com.masai.entity.Issues;
 import com.masai.entity.LoggedIn;
 import com.masai.entity.Status;
@@ -105,6 +106,45 @@ public class SupportServiceImpl implements SupportService{
 		
 		String reply = sc.nextLine();
 		dao.replyToIssue(id,reply);
+		
+	}
+
+
+	@Override
+	public void closeIssue(int id) throws SomethingWentWrong {
+		
+		SupportDAO dao = new SupportDAOImpl();
+		List<Issues> list = dao.viewIssue();
+		
+		for(Issues i: list) {
+			if(i.getCsr().getId() == LoggedIn.userid && i.getStatus() == Status.OPEN) {
+				System.out.println(i.getId() + "  "+ i.getIssue());
+			}
+		}
+		dao.closeIssue(id);
+		
+	}
+
+	@Override
+	public void viewFeedback() throws SomethingWentWrong,NoRecordFound {
+		
+		SupportDAO dao = new SupportDAOImpl();
+		List<Feedback> feedback = dao.viewFeedback();
+		
+		for(Feedback i: feedback) {
+			if(i.getIssue().getCsr().getId() == LoggedIn.userid) {
+				System.out.println(i.getIssue().getIssue()+"    :  "+i.getMessage());
+				
+			}
+		}
+		
+	}
+
+	@Override
+	public void deleteAccount() throws SomethingWentWrong, NoRecordFound {
+		
+		SupportDAO dao = new SupportDAOImpl();
+		dao.deleteAccount();
 		
 	}
 

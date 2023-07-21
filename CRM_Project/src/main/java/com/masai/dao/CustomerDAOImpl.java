@@ -31,7 +31,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 			
 			
 			if((long) query.getSingleResult()>0) {
-				throw new DuplicateDataException("Customer is already present");
+				throw new DuplicateDataException("************ Customer already exists ************");
 			}
 			EntityTransaction et = em.getTransaction();
 			et.begin();
@@ -40,7 +40,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 		
 		}
 		catch(PersistenceException pe) {
-			throw new SomethingWentWrong("Customer already exists");
+			throw new SomethingWentWrong(pe.getMessage());
 		}
 		finally {
 			if(em!=null) {
@@ -58,7 +58,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 		try {
 			em = EMUtils.createConection();
 			
-			Query query = em.createQuery("SELECT c.id FROM Customer c WHERE username = :un AND password = :pw AND isDeleted = 1");
+			Query query = em.createQuery("SELECT c.id FROM Customer c WHERE username = :un AND password = :pw");
 			
 			query.setParameter("un", username);
 			query.setParameter("pw", password);
@@ -66,7 +66,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 			List<Integer> list = query.getResultList();
 			
 			if(list.size() == 0) {
-				throw new NoRecordFound("User not found,Register as new customer");
+				throw new NoRecordFound("************** User not found,Register as new customer **************");
 				
 			}
 			LoggedIn.userid = list.get(0);
@@ -100,7 +100,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 			
 			
 		}catch(PersistenceException pe) {
-			throw new SomethingWentWrong("Error, please try again");
+			throw new SomethingWentWrong(pe.getMessage());
 		}
 		finally {
 			if(em!=null) {
@@ -135,6 +135,30 @@ public class CustomerDAOImpl implements CustomerDAO{
 			if(em!=null) {
 				em.close();
 			}
+		}
+		
+	}
+
+	@Override
+	public void deleteAccount() throws SomethingWentWrong {
+		
+		EntityManager em = null;
+		EntityTransaction et = null;
+		
+		try {
+			em = EMUtils.createConection();
+			Customer cust = em.find(Customer.class, LoggedIn.userid);
+			
+			et = em.getTransaction();
+			et.begin();
+			em.remove(cust);
+			et.commit();
+					
+			
+		}catch(PersistenceException e) {
+			throw new SomethingWentWrong(e.getMessage());
+		}finally {
+			em.close();
 		}
 		
 	}

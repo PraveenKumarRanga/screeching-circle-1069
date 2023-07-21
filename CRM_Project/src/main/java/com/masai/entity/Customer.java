@@ -22,21 +22,19 @@ public class Customer {
 	@Column(length = 50, nullable = false)
 	private String password;
 	
-	@Column(name= "deleted", nullable = false)
-	private int isDeleted;
 
 	public Customer() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Customer(String email, String username, String password, int isDeleted) {
+	public Customer(String email, String username, String password) {
 		super();
 		
 		this.email = email;
 		this.username = username;
 		this.password = password;
-		this.isDeleted = isDeleted;
+		
 	}
 
 	/**
@@ -94,20 +92,14 @@ public class Customer {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public int  getIsDeleted() {
-		return isDeleted;
-	}
-	
-	public void setIsDeleted(int isDeleted) {
-		this.isDeleted = isDeleted;
-	}
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
-				+ ", isDeleted=" + isDeleted + "]";
+		return "Customer [id=" + id + ", email=" + email + ", username=" + username + ", password=" + password + "]";
 	}
+	
+	
+
 
 	
 	
