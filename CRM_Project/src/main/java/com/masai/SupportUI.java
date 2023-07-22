@@ -242,7 +242,8 @@ public class SupportUI {
 			try {
 				SupportService service = new SupportServiceImpl();
 				service.deleteAccount();
-				System.out.println("Account deleted successfully");
+				System.out.println("========================================");
+				System.out.println("    Account is deleted successfully");
 			} catch (SomethingWentWrong | NoRecordFound e) {
 				// TODO Auto-generated catch block
 				System.out.println(e.getMessage());

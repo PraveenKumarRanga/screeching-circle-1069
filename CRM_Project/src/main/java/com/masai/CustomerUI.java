@@ -29,7 +29,8 @@ public class CustomerUI {
 		
 		try {
 			service.addCustomer(customer);
-			System.out.println("Customer registered successfully");
+			System.out.println("=============================================");
+			System.out.println("      Customer registered successfully");
 		} catch (DuplicateDataException | SomethingWentWrong e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -152,24 +153,19 @@ public class CustomerUI {
 
 	private static void deleteAccount(Scanner sc) {
 		
-		System.out.println("Are sure, do you want to delete account");
-		String choice = sc.next().toLowerCase();
-		if(choice == "yes") {
+	
 			try {
 				CustomerService service = new CustomerServiceImpl();
 				service.deleteAccount();
-				System.out.println("Account is deleted");
+				System.out.println("========================================");
+				System.out.println("    Account is deleted successfully");
 			}catch(SomethingWentWrong e) {
 				e.getMessage();
 			}
-		}else if(choice == "no") {
-			System.out.println("Account is not deleted");
-		}else {
-			System.out.println("please enter valid choice");
 		}
 		
 		
 	}
 	
 	
-}
+
