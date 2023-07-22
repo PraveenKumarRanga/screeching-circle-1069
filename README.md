@@ -23,4 +23,7 @@ Role of Customer
 3. Raise an issue by providing a description of the problem.
 4. View the status of the raised issue, whether it is open or closed.
 5. Provide feedback once the issue is closed.
-6. Log out from the customer account.
+6. You can delete the account.
+7. Log out from the customer account.
+
+
