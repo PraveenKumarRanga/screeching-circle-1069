@@ -291,9 +291,7 @@ public class SupportDAOImpl implements SupportDAO{
 			
 			et = em.getTransaction();
 			et.begin();
-//			sp.setIsClosed(0);
 			em.remove(sp);
-			
 			et.commit();
 			
 			
