@@ -18,9 +18,9 @@ Role of Customer Support Representative
 8. Log out from the customer support representative account.
 
 Role of Customer
-You can register for a customer account by providing the necessary information.
-Log in to the customer account using registered credentials.
-Raise an issue by providing a description of the problem.
-View the status of the raised issue, whether it is open or closed.
-Provide feedback once the issue is closed.
-Log out from the customer account.
+1. You can register for a customer account by providing the necessary information.
+2. Log in to the customer account using registered credentials.
+3. Raise an issue by providing a description of the problem.
+4. View the status of the raised issue, whether it is open or closed.
+5. Provide feedback once the issue is closed.
+6. Log out from the customer account.
