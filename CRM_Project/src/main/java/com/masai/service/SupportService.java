@@ -29,6 +29,8 @@ public interface SupportService {
 
 	void deleteAccount() throws SomethingWentWrong, NoRecordFound;
 
+	void deleteIssue(int id) throws SomethingWentWrong, NoRecordFound;
+
 
 
 }

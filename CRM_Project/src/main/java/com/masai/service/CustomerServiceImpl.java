@@ -52,10 +52,10 @@ public class CustomerServiceImpl implements CustomerService{
 		for(Issues i : list) {
 			if(i.getStatus().equals(Status.CLOSED) && i.getCustomer().getId() == LoggedIn.userid) {
 				System.out.println("================================================");
-				System.out.println(i.getId()+" "+ i.getIssue()+" "+i.getReply());
+				System.out.println("Issue id : "+i.getId()+"  |  "+"Issue : "+ i.getIssue()+"  |  "+"Reply : "+i.getReply());
 			}
 		}
-		
+		System.out.println("================================================");
 		System.out.println("Select issue by id to provide feedback");
 		int id = sc.nextInt();
 		
@@ -65,6 +65,7 @@ public class CustomerServiceImpl implements CustomerService{
 		
 		System.out.println("Enter your rating (1 to 5)");
 		int rating  = sc.nextInt();
+		
 		custDAO.giveFeedback(id,feedback,rating);
 		
 		

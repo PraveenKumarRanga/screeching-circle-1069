@@ -69,7 +69,8 @@ public class SupportUI {
 			System.out.println("| Press 3 to Reply to issue          |");
 			System.out.println("| Press 4 to Close the issue         |");
 			System.out.println("| Press 5 to view feedback           |");
-			System.out.println("| Perss 6 to delete account");
+			System.out.println("| Perss 6 to delete account          |");
+			System.out.println("| Press 7 to delete issue            |");
 			System.out.println("| Press 0 to logout                  |");
 			System.out.println("======================================");
 			
@@ -96,6 +97,9 @@ public class SupportUI {
 			case 6:
 				deleteAccount(sc);
 				break;
+			case 7:
+				deleteIssue(sc);
+				break;
 			case 0:
 				System.out.println("====================================");
 				System.out.println("       Thankyou, visit again");
@@ -113,11 +117,33 @@ public class SupportUI {
 		
 	}
 
+	private static void deleteIssue(Scanner sc) {
+		
+		try {
+			
+			System.out.println("Enter issue id to delete issue");
+			int id = sc.nextInt();
+			
+			SupportService service = new SupportServiceImpl();
+			service.deleteIssue(id);
+			System.out.println("=====================================================");
+			System.out.println("          Issue is deleted successfully");
+			System.out.println("=====================================================");
+		} catch (SomethingWentWrong | NoRecordFound e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}	
+		
+		
+	}
+
 	private static void viewIssue() {
 		
 		SupportService service = new SupportServiceImpl();
 		try {
+			System.out.println("================================================");
 			service.viewIssue();
+			System.out.println("================================================");
 		} catch (SomethingWentWrong e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -199,23 +225,26 @@ public class SupportUI {
 		
 		try {
 			service.replyToIssue(id,sc);
-			System.out.println("==================================================");
-			System.out.println("        Reply to the issue is submitted");
-			System.out.println("==================================================");
+			System.out.println("=====================================================");
+			System.out.println("          Reply to the issue is submitted");
+			System.out.println("====================================================="); 
 		} catch (SomethingWentWrong e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
 	}
 	
 	private static void closeIssue(Scanner sc) {
-		
-		System.out.println("Enter issue id to reply");
+		System.out.println("=====================================================");
+		System.out.println("Enter issue id to close");
 		int id = sc.nextInt();
 		SupportService service = new SupportServiceImpl();
 		try {
 			service.closeIssue(id);
+			System.out.println("=====================================================");
+			System.out.println("                 Issue is closed");
+			System.out.println("=====================================================");
 		} catch (SomethingWentWrong e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -227,11 +256,11 @@ public class SupportUI {
 		
 		SupportService service = new SupportServiceImpl();
 		try {
+			System.out.println("===================Feedback=====================");
 			service.viewFeedback();
-			System.out.println("===============Feedback==============");
+			System.out.println("================================================");
 		} catch (SomethingWentWrong | NoRecordFound e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 	}
@@ -242,8 +271,9 @@ public class SupportUI {
 			try {
 				SupportService service = new SupportServiceImpl();
 				service.deleteAccount();
-				System.out.println("========================================");
-				System.out.println("    Account is deleted successfully");
+				System.out.println("=====================================================");
+				System.out.println("          Account is deleted successfully");
+				System.out.println("=====================================================");
 			} catch (SomethingWentWrong | NoRecordFound e) {
 				// TODO Auto-generated catch block
 				System.out.println(e.getMessage());
