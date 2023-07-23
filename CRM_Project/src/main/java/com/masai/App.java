@@ -39,14 +39,14 @@ public class App
         		SupportUI.loginCSR(sc);
         		break;
         	case 0:
-        		System.out.println("======================================");
-        		System.out.println("        Thankyou visit again");
-        		System.out.println("======================================"); 
+        		System.out.println("=====================================================");
+        		System.out.println("             Thankyou visit again");
+        		System.out.println("=====================================================");
         		break;
         	default:
-        		System.out.println("**************************************");
-        		System.out.println("     Please enter valid choice");
-        		System.out.println("**************************************");
+        		System.out.println("*****************************************************");
+        		System.out.println("             Please enter valid choice");
+        		System.out.println("*****************************************************");
         		
         	}
     	}while(choice!=0);

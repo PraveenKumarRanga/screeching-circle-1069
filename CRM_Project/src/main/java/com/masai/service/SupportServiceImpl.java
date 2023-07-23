@@ -53,15 +53,16 @@ public class SupportServiceImpl implements SupportService{
 		List<Issues> list = dao.viewIssue();
 		System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------");
 		if(list.size()>0) {
-			System.out.println(" | "+"Issue_id"+" | "+ "Customer_id"+" | " + " Issue"+"                                  | "+ "Status"+" | "+"Assigned_To"+"     |");
-			System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------");
+			
+			
 		for(Issues i : list) {
 			if(i.getCsr()==null) {
-			System.out.println(" |     "+i.getId() + "    |     " + i.getCustomer().getId() + "       |  " + i.getIssue() + "          | " + i.getStatus() +"   | "+ "Not Yet"+ "         |");
+			System.out.println("Issue id : "+i.getId()+ "  |  " + "Customer_id : " + i.getCustomer().getId()+ "  |  "  + "Issue : " + i.getIssue()+ "  |  "  + "Status : " + i.getStatus()+ "  |  "  +"Assigned : "+ "Not Yet");
 				
 			}
 			else {
-			System.out.println(" |     "+i.getId() + "    |     " + i.getCustomer().getId() + "       |  " + i.getIssue() + "          | " + i.getStatus() + "   | " + i.getCsr().getId()+ "       |");
+			System.out.println("Issue id : "+i.getId()+ "  |  "  + "Customer_id : " + i.getCustomer().getId() + "  |  " + "Issue : " + i.getIssue()+ "  |  "  + "Status : " + i.getStatus()+ "  |  "  +"Assigned : "+ i.getCsr().getId());
+			
 			}
 		  }
 			
@@ -93,7 +94,7 @@ public class SupportServiceImpl implements SupportService{
 		List<Issues> list = dao.viewIssue();
 		
 		for(Issues i : list) {
-			if(i.getCsr().getId() == LoggedIn.userid && i.getStatus() == Status.OPEN) {
+			if(i.getCsr() != null && i.getCsr().getId() == LoggedIn.userid && i.getStatus() == Status.OPEN) {
 				System.out.println(i.getId() + "  " + i.getIssue());
 			}
 		}
@@ -103,8 +104,8 @@ public class SupportServiceImpl implements SupportService{
 		
 		sc.nextLine();
 		System.out.println("Enter reply for issue");
-		
 		String reply = sc.nextLine();
+		
 		dao.replyToIssue(id,reply);
 		
 	}
@@ -117,8 +118,10 @@ public class SupportServiceImpl implements SupportService{
 		List<Issues> list = dao.viewIssue();
 		
 		for(Issues i: list) {
-			if(i.getCsr().getId() == LoggedIn.userid && i.getStatus() == Status.OPEN) {
+			if(i.getCsr()!= null && i.getCsr().getId() == LoggedIn.userid && i.getStatus() == Status.OPEN) {
+				System.out.println("=====================================================");
 				System.out.println(i.getId() + "  "+ i.getIssue());
+				System.out.println("=====================================================");
 			}
 		}
 		dao.closeIssue(id);
@@ -129,14 +132,32 @@ public class SupportServiceImpl implements SupportService{
 	public void viewFeedback() throws SomethingWentWrong,NoRecordFound {
 		
 		SupportDAO dao = new SupportDAOImpl();
-		List<Feedback> feedback = dao.viewFeedback();
+		List<Feedback> list = dao.viewFeedback();
 		
-		for(Feedback i: feedback) {
-			if(i.getIssue().getCsr().getId() == LoggedIn.userid) {
-				System.out.println(i.getIssue().getIssue()+"    :  "+i.getMessage());
-				
+//		if(list.size()>0) {
+//			for(Feedback i: list) {
+//				if(i != null && i.getFeedIssue() != null && i.getFeedIssue().getCsr()!= null && i.getFeedIssue().getCsr().getId() == LoggedIn.userid) {
+//					
+//					System.out.println("=====================================================");
+//					System.out.println("Issue : "+i.getFeedIssue()+" Message : "+i.getMessage());
+//					System.out.println("=====================================================");
+//					
+//				}
+//			}
+//		}
+		
+		if(list.size()>0) {
+			
+			for(Feedback i: list) {
+				if(i.getFeedIssue()==null) {
+					System.out.println("=====================================================");
+					System.out.println("Issue_id : "+ i.getFeedIssue().getId()+" Feedback : "+ i.getMessage());
+					System.out.println("=====================================================");
+				}
 			}
 		}
+		
+		
 		
 	}
 
@@ -145,6 +166,14 @@ public class SupportServiceImpl implements SupportService{
 		
 		SupportDAO dao = new SupportDAOImpl();
 		dao.deleteAccount();
+		
+	}
+
+	@Override
+	public void deleteIssue(int id) throws SomethingWentWrong, NoRecordFound {
+		
+		SupportDAO dao = new SupportDAOImpl();
+		dao.deleteIssue(id);
 		
 	}
 

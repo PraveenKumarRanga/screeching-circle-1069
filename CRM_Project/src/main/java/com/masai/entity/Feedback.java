@@ -23,18 +23,18 @@ public class Feedback {
 	
 	@ManyToOne
 	@JoinColumn(name = "issue_id")
-	private Issues issue;
+	private Issues feedIssue;
 
 	public Feedback() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Feedback(String message, int rating, Issues issue) {
+	public Feedback(String message, int rating, Issues feedIssue) {
 		super();
 		this.message = message;
 		this.rating = rating;
-		this.issue = issue;
+		this.feedIssue = feedIssue;
 	}
 
 	/**
@@ -80,23 +80,24 @@ public class Feedback {
 	}
 
 	/**
-	 * @return the issue
+	 * @return the feedIssue
 	 */
-	public Issues getIssue() {
-		return issue;
+	public Issues getFeedIssue() {
+		return feedIssue;
 	}
 
 	/**
-	 * @param issue the issue to set
+	 * @param feedIssue the feedIssue to set
 	 */
-	public void setIssue(Issues issue) {
-		this.issue = issue;
+	public void setFeedIssue(Issues feedIssue) {
+		this.feedIssue = feedIssue;
 	}
 
 	@Override
 	public String toString() {
-		return "Feedback [id=" + id + ", message=" + message + ", rating=" + rating + ", issue=" + issue + "]";
+		return "Feedback [id=" + id + ", message=" + message + ", rating=" + rating + ", feedIssue=" + feedIssue + "]";
 	}
+
 	
 	
 	

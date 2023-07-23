@@ -267,15 +267,17 @@ public class SupportDAOImpl implements SupportDAO{
 			if(list.size()==0) {
 				throw new NoRecordFound("*************** Feedback not available ********************");
 			}
-			
+//			return list;
 		}catch(PersistenceException pe) {
 			throw new SomethingWentWrong(pe.getMessage());
 		}finally {
-			em.close();
+			if(em != null) {
+				em.close();
+			}
 		}
 		
 		
-		return null;
+		return list;
 	}
 
 	@Override
@@ -303,6 +305,36 @@ public class SupportDAOImpl implements SupportDAO{
 		}
 		
 		
+	}
+
+
+	@Override
+	public void deleteIssue(int id) throws SomethingWentWrong, NoRecordFound {
+		
+		EntityManager em = null;
+		EntityTransaction et = null;
+		
+		try {
+			
+			em = EMUtils.createConection();
+			Issues issue = em.find(Issues.class, id); 
+			
+			if(issue!=null) {
+				et = em.getTransaction();
+				et.begin();
+				em.remove(issue);
+				et.commit();
+			}else {
+				throw new NoRecordFound("Issue is not found for given id");
+			}
+			
+			
+		}catch(PersistenceException e) {
+			throw new SomethingWentWrong(e.getMessage());
+		}
+		finally {
+			em.close();
+		}
 	}
 
 	

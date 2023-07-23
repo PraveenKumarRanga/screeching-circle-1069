@@ -29,8 +29,9 @@ public class CustomerUI {
 		
 		try {
 			service.addCustomer(customer);
-			System.out.println("=============================================");
-			System.out.println("      Customer registered successfully");
+			System.out.println("=====================================================");
+			System.out.println("        Customer registered successfully");
+			System.out.println("=====================================================");
 		} catch (DuplicateDataException | SomethingWentWrong e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
@@ -67,13 +68,13 @@ public class CustomerUI {
 		
 		int choice;
 		do {
-			System.out.println("====================================");
-			System.out.println("| Press 1 to Raise Issue           |");
-			System.out.println("| Press 2 to view issue status     |");
-			System.out.println("| Press 3 to provide feedback      |");
-			System.out.println("| Press 4 to delete account        |");
-			System.out.println("| Press 0 to log_out               |");
-			System.out.println("====================================");
+			System.out.println("=====================================================");
+			System.out.println("| Press 1 to Raise Issue                            |");
+			System.out.println("| Press 2 to view issue status                      |");
+			System.out.println("| Press 3 to provide feedback                       |");
+			System.out.println("| Press 4 to delete account                         |");
+			System.out.println("| Press 0 to log_out                                |");
+			System.out.println("=====================================================");
 			
 			System.out.println("Enter yuour choice as customer : ");
 			choice = sc.nextInt();
@@ -92,14 +93,14 @@ public class CustomerUI {
 				deleteAccount(sc);
 				break;
 			case 0:
-				System.out.println("======================================");
-        		System.out.println("        Thankyou visit again");
-        		System.out.println("======================================"); 
+				System.out.println("=====================================================");
+        		System.out.println("              Thankyou visit again");
+        		System.out.println("=====================================================");
         		break;
         	default:
-        		System.out.println("**************************************");
+        		System.out.println("*****************************************************");
         		System.out.println("     Please enter valid choice");
-        		System.out.println("**************************************");
+        		System.out.println("*****************************************************");
 			}
 		}while(choice!=0);
 	}
@@ -110,9 +111,9 @@ public class CustomerUI {
 		
 		try {
 			service.giveFeedback();
-			System.out.println("====================");
-			System.out.println("Fedback is recorded");
-			System.out.println("====================");
+			System.out.println("=====================================================");
+			System.out.println("                 Fedback is recorded");
+			System.out.println("=====================================================");
 		} catch (SomethingWentWrong e) {
 			// TODO Auto-generated catch block
 			e.getMessage();
@@ -157,8 +158,9 @@ public class CustomerUI {
 			try {
 				CustomerService service = new CustomerServiceImpl();
 				service.deleteAccount();
-				System.out.println("========================================");
-				System.out.println("    Account is deleted successfully");
+				System.out.println("=====================================================");
+				System.out.println("         Account is deleted successfully");
+				System.out.println("=====================================================");
 			}catch(SomethingWentWrong e) {
 				e.getMessage();
 			}
